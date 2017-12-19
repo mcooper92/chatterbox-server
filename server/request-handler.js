@@ -40,7 +40,7 @@ var requestHandler = function(request, response) {
   //action ? action(request, response) : res.send('Error in request handler');
   // var statusCode = 200;
   var headers = defaultCorsHeaders;
-  
+
   if (request.method === 'GET') {
     if (!request.url.startsWith('/classes/messages')) { 
       response.writeHead(404, headers);
