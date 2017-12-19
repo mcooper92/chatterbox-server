@@ -32,6 +32,7 @@ var data = {
 
 
 var message = '';
+var counter = 0;
 
 var requestHandler = function(request, response) {
 
@@ -41,7 +42,7 @@ var requestHandler = function(request, response) {
   var headers = defaultCorsHeaders;
   
   if (request.method === 'GET') {
-    if (request.url !== '/classes/messages') { 
+    if (!request.url.startsWith('/classes/messages')) { 
       response.writeHead(404, headers);
       response.end();
     } else {
@@ -52,7 +53,7 @@ var requestHandler = function(request, response) {
   }
 
   if (request.method === 'POST') {
-    if (request.url !== '/classes/messages') { 
+    if (!request.url.startsWith('/classes/messages')) { 
       response.writeHead(404, headers);
       response.end();
     } else {
@@ -75,6 +76,9 @@ var requestHandler = function(request, response) {
          
         // at this point, `body` has the entire request body stored in it as a string
         message = JSON.parse(body);
+        message.createdAt = new Date();
+        message.objectId = counter;
+        counter += 1;
         data.results.push(message);
       });
 
